@@ -7,10 +7,17 @@ spring:
 
   cloud:
     gateway:
-      discovery:
-        locator:
-          enabled: true
-          lower-case-service-id: true
-      default-filters:
-        - StripPrefix=1    
+      routes:
+        - id: product-service
+          uri: lb://product-service
+          predicates:
+            - Path=/api/scn/v1/product/**
+        - id: inventory-service
+          uri: lb://inventory-service
+          predicates:
+            - Path=/api/scn/v1/inventory/**
+        - id: order-service
+          uri: lb://order-service
+          predicates:
+            - Path=/api/scn/v1/order/**
 
