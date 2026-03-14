@@ -19,11 +19,12 @@ spring:
           lower-case-service-id: true
       
       routes:
-        - id: order-service
+        - id: order-service-prefixed
           uri: lb://order-service
           predicates:
-            - Path=/api/scn/v1/order/**
+            - Path=/order-service/**
           filters:
+            - StripPrefix=1
             - name: RequestRateLimiter
               args:
                 key-resolver: "#{@userKeyResolver}"
